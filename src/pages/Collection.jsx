@@ -7,49 +7,54 @@ import ProductItem from '../components/ProductItem';
 
 const Collection = () => {
 
-  const {products} = useContext(ShopContext);
   const [showFilter, setsetshowFilter] = useState(false);
-  const [filterProducts, setfilterProducts] = useState([]);
-  const [category, setcategory] = useState([]);
-  const [subcategory, setsubcategory] = useState([]);
+  const { products } = useContext(ShopContext);
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
-  const toggleCategory =( e)=>{
-     if(category.includes(e.target.value)){
-      setsubcategory(prev => prev.filter(item => item !== e.target.value))
-     }else{
-      setcategory(prev => [...prev, e.target.value]);
-     }
-  }
-
-  const toggleSubCategory = (e)=>{
-    if(subcategory.includes(e.target.value)){
-      setsubcategory(prev => prev.filter(item => item !== e.target.value))
-    }else{
-      setsubcategory(prev  => [e.target.value])
-    }
-  }
   
-  const applyFilter = ()=>{
-    let productsCopy = products.slice();
-    if(category.length > 0){
-      productsCopy = productsCopy.filter(item => category.includes(item.category));
+  const toggleCategory =( e)=>{
+    if(category.includes(e.target.value)){
+     setCategory(prev => prev.filter(item => item !== e.target.value))
+    }else{
+     setCategory(prev => [...prev, e.target.value]);
     }
-    setfilterProducts(productsCopy);
+ }
+
+ const toggleSubCategory =( e)=>{
+  if(subCategory.includes(e.target.value)){
+   setSubCategory(prev => prev.filter(item => item !== e.target.value))
+  }else{
+   setSubCategory(prev => [...prev, e.target.value]);
   }
+}
 
 
+   
+const applyFilter = ()=>{
+  let productsCopy = products.slice();
+  if(category.length > 0){
+    productsCopy = productsCopy.filter(item => category.includes(item.category));
+  }
+  if(subCategory.length > 0){
+    productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory));
+  }
+  setFilteredProducts(productsCopy);
+}
 
-  useEffect(()=>{
-     setfilterProducts(products);
-  },[])
 
-  useEffect(()=>{
+useEffect(()=>{
+   setFilteredProducts(products);
+},[])
+
+useEffect(()=>{
 applyFilter();
-  },[category, subcategory])
+},[category, subCategory])
 
-  useEffect(()=>{
-    console.log(subcategory)
-  },[])
+useEffect(()=>{
+  console.log(subCategory)
+},[])
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -104,11 +109,12 @@ applyFilter();
             </div>
             {/* Map product */}
            <div className="grid grid-col-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-            {
-              filterProducts.map((item,index)=>(
-                <ProductItem key={index} id={item._id} name={item.name} price={item.price} image={item.image} />
-              ))
-            }
+           {
+              filteredProducts.map((item,index)=>(
+           <ProductItem key={index} id={item._id} name={item.name} price={item.price} image={item.image} />
+            ))
+           }
+
            </div>
            </div>
            
@@ -117,3 +123,4 @@ applyFilter();
 }
 
 export default Collection
+
