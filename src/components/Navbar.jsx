@@ -3,15 +3,20 @@ import {assets} from "../assets/assets"
 import { Link, NavLink } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 
+
 const Navbar = () => {
 const [visible, setvisible] = useState(false);
 const { setshowsearch, getCartCount} = useContext(ShopContext);
 
+
+
+
   return (
  
-    <div className='flex items-center  justify-between py-5 font-medium '>
+<div className=' h-[4.5rem] sticky top-0 z-20 bg-white border-b-[1px] border-gray-400' >
+<div id='logo' className='flex  items-center  justify-between py-5 font-medium '>
     <img  src={assets.logo}  className='w-36' alt="" />
-    <ul className='hidden  sm:flex gap-5 text-sm text-gray-700 '>
+    <ul className='hidden   sm:flex gap-5 text-sm text-gray-700 '>
 
     <NavLink to='/' className="flex flex-col items-center gap-1">
          <p>Home</p>
@@ -53,17 +58,18 @@ const { setshowsearch, getCartCount} = useContext(ShopContext);
      <img onClick={()=>setvisible(true)} src={assets.menu_icon} className='w-5 cursor-pointer sm:hidden md:' alt="" />
 </div>
 {/* Sidebar menu for small screens */}
-<div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' :'w-0' }`}>
+<div className={`absolute top-0 right-0 h-[50rem] overflow-hidden bg-white transition-all  ${visible ? 'w-full' :'w-0' }`}>
     <div className='flex flex-col text-gray-600 '>
-         <div onClick={()=>setvisible(false)} className='flex items-center gap-4 p-3'>
+         <div onClick={()=>setvisible(false)} className='flex  items-center gap-4 p-5'>
              <img className='hd-4 cursor-pointer rotate-180' src={assets.dropdown_icon} alt="" />
              <p>Back</p>
          </div>
-         <NavLink onClick={()=>setvisible(false)} className='py-2 pl-6 border text-center' to="/">Home</NavLink>
-         <NavLink onClick={()=>setvisible(false)} className='py-2 pl-6 border text-center' to="/Collection">COLLECTION</NavLink>
-         <NavLink onClick={()=>setvisible(false)} className='py-2 pl-6 border text-center' to="/about">ABOUT</NavLink>
-         <NavLink onClick={()=>setvisible(false)} className='py-2 pl-6 border text-center'  to="/login">LOGIN</NavLink>
+         <NavLink onClick={()=>setvisible(false)} className='py-4 pl-6 border text-center ' to="/">Home</NavLink>
+         <NavLink onClick={()=>setvisible(false)} className='py-4 pl-6 border text-center' to="/Collection">COLLECTION</NavLink>
+         <NavLink onClick={()=>setvisible(false)} className='py-4 pl-6 border text-center' to="/about">ABOUT</NavLink>
+         <NavLink onClick={()=>setvisible(false)} className='py-4 pl-6 border text-center'  to="/login">LOGIN</NavLink>
     </div>
+</div>
 </div>
 </div>
  
